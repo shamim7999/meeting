@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:replace="/index::bootstrapCssFragment">
+    <link th:replace="/index::cssFragment">
+</head>
+<body>
+
+    <div class="container">
+        <form th:action="@{/process-add-user}" method="post" class="form-inline text-center">
+            <div class="form-group mx-sm-6 mb-2">
+                <label for="inputPassword2" class="sr-only">User Name</label> <!-- Fixed closing label tag -->
+                <input type="text" class="form-control" id="inputPassword2" name="userName" placeholder="User Name ..."/> <!-- Added name attribute -->
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Save</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <th scope="row" th:text="${user.id}"></th>
+                <td th:text="${user.userName}"></td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn btn-sm btn-danger" th:href="@{'/process-delete-user?userId=' + ${user.id  } }">
+                            Delete
+                        </a>
+                        &nbsp; &nbsp;
+                        <button class="btn btn-sm btn-success" th:onclick="'editUser(' + ${user.id} + ')'">
+                            Edit
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+<section th:replace="/index::jsFragment"></section>
+</body>
+</html>
